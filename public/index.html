@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HeritageTour - Smart Tourism & Heritage Management Platform</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<!-- ================= HEADER / NAVIGATION ================= -->
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <div class="brand" id="brandLogo">
+      <span class="brand-mark">🏛️</span>
+      <span class="brand-name">HeritageTour</span>
+    </div>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#" class="nav-link" id="navHome">Home</a>
+      <a href="#" class="nav-link" id="navSites">Heritage Sites</a>
+      <a href="#" class="nav-link" id="navFeatures">Features</a>
+      <a href="#" class="nav-link" id="navEvents">Events</a>
+    </nav>
+
+    <div class="header-actions" id="loggedOutActions">
+      <button class="btn btn-outline" id="navLoginBtn">Login</button>
+    </div>
+
+    <div class="header-actions hidden" id="loggedInActions">
+      <span class="header-username" id="headerUserName"></span>
+      <button class="btn btn-outline" id="navDashboardBtn">Dashboard</button>
+      <button class="btn btn-primary" id="navLogoutBtn">Logout</button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= TOAST / ALERT ================= -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- ================= HOME SECTION ================= -->
+<main>
+<section id="homeSection" class="page-section">
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <h1>Discover India's Living Heritage</h1>
+      <p>Book guided visits to iconic monuments, connect with expert tour guides, and experience history like never before.</p>
+      <div class="hero-search">
+        <input type="text" id="heroSearchInput" placeholder="Search heritage sites, e.g. Taj Mahal, Delhi..." />
+        <button class="btn btn-primary" id="heroSearchBtn">Search</button>
+      </div>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" id="heroExploreBtn">Explore Heritage Sites</button>
+        <button class="btn btn-outline btn-lg" id="heroLoginBtn">Get Started</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sitesSection">
+    <div class="container">
+      <h2 class="section-title">Heritage Sites</h2>
+      <p class="section-subtitle">Explore some of India's most treasured monuments</p>
+      <div id="homeSitesGrid" class="card-grid"></div>
+    </div>
+  </section>
+
+  <section class="section alt-bg" id="featuresSection">
+    <div class="container">
+      <h2 class="section-title">Why HeritageTour</h2>
+      <p class="section-subtitle">Everything you need to plan a heritage trip, in one platform</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🗺️</div>
+          <h3>Curated Heritage Sites</h3>
+          <p>Browse detailed information on timings, ticket prices and history before you visit.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧭</div>
+          <h3>Expert Tour Guides</h3>
+          <p>Every visit is paired with a verified guide chosen for their experience and languages spoken.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💳</div>
+          <h3>Secure Simulated Payments</h3>
+          <p>Book and pay using UPI, Card or Net Banking with instant confirmation.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎉</div>
+          <h3>Heritage Events</h3>
+          <p>Register for festivals, light shows and guided walks hosted at heritage sites.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⭐</div>
+          <h3>Community Feedback</h3>
+          <p>Read and share ratings to help fellow travellers plan a better trip.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Admin Insights</h3>
+          <p>Platform administrators can manage sites, guides, events and track bookings in real time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="homeEventsSection">
+    <div class="container">
+      <h2 class="section-title">Upcoming Events</h2>
+      <p class="section-subtitle">Special experiences hosted at our heritage sites</p>
+      <div id="homeEventsGrid" class="card-grid"></div>
+    </div>
+  </section>
+
+</section>
+
+<!-- ================= TOURIST DASHBOARD ================= -->
+<section id="touristDashboardSection" class="page-section hidden">
+  <div class="container dashboard-layout">
+
+    <aside class="dashboard-sidebar">
+      <h3>Welcome,<br /><span id="touristWelcomeName">Tourist</span></h3>
+      <nav class="dashboard-nav">
+        <button class="dashboard-nav-btn active" data-tab="touristOverviewTab">Dashboard</button>
+        <button class="dashboard-nav-btn" data-tab="touristSitesTab">Heritage Sites</button>
+        <button class="dashboard-nav-btn" data-tab="touristBookingsTab">My Bookings</button>
+        <button class="dashboard-nav-btn" data-tab="touristGuidesTab">Tour Guides</button>
+        <button class="dashboard-nav-btn" data-tab="touristEventsTab">Events</button>
+        <button class="dashboard-nav-btn" data-tab="touristFeedbackTab">Feedback</button>
+        <button class="dashboard-nav-btn logout-btn" id="touristLogoutBtn">Logout</button>
+      </nav>
+    </aside>
+
+    <div class="dashboard-content">
+
+      <!-- Overview -->
+      <div class="dashboard-tab" id="touristOverviewTab">
+        <h2>Your Dashboard</h2>
+        <div class="info-card" id="touristInfoCard">
+          <h3>Your Information</h3>
+          <p><strong>Name:</strong> <span id="touristInfoName"></span></p>
+          <p><strong>Email:</strong> <span id="touristInfoEmail"></span></p>
+          <p><strong>Phone:</strong> <span id="touristInfoPhone"></span></p>
+        </div>
+        <h3 class="quick-actions-title">Quick Actions</h3>
+        <div class="quick-actions">
+          <button class="quick-action-btn" data-tab="touristSitesTab">🏛️<span>Heritage Sites</span></button>
+          <button class="quick-action-btn" id="quickBookVisitBtn">🎫<span>Book Visit</span></button>
+          <button class="quick-action-btn" data-tab="touristBookingsTab">📖<span>My Bookings</span></button>
+          <button class="quick-action-btn" data-tab="touristGuidesTab">🧭<span>Tour Guides</span></button>
+          <button class="quick-action-btn" data-tab="touristEventsTab">🎉<span>Events</span></button>
+          <button class="quick-action-btn" data-tab="touristFeedbackTab">⭐<span>Feedback</span></button>
+        </div>
+      </div>
+
+      <!-- Heritage Sites -->
+      <div class="dashboard-tab hidden" id="touristSitesTab">
+        <div class="tab-header">
+          <h2>Heritage Sites</h2>
+          <input type="text" id="touristSitesSearch" placeholder="Search by name or location..." />
+        </div>
+        <div id="touristSitesGrid" class="card-grid"></div>
+      </div>
+
+      <!-- My Bookings -->
+      <div class="dashboard-tab hidden" id="touristBookingsTab">
+        <div class="tab-header">
+          <h2>My Bookings</h2>
+          <button class="btn btn-primary" id="newBookingBtn">+ New Booking</button>
+        </div>
+        <div id="myBookingsList" class="bookings-list"></div>
+      </div>
+
+      <!-- Tour Guides -->
+      <div class="dashboard-tab hidden" id="touristGuidesTab">
+        <h2>Tour Guides</h2>
+        <div id="touristGuidesGrid" class="card-grid"></div>
+      </div>
+
+      <!-- Events -->
+      <div class="dashboard-tab hidden" id="touristEventsTab">
+        <h2>Events</h2>
+        <div id="touristEventsGrid" class="card-grid"></div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="dashboard-tab hidden" id="touristFeedbackTab">
+        <h2>Submit Feedback</h2>
+        <form id="feedbackForm" class="form-card">
+          <label for="feedbackSiteSelect">Heritage Site</label>
+          <select id="feedbackSiteSelect" required></select>
+
+          <label for="feedbackRatingSelect">Rating</label>
+          <select id="feedbackRatingSelect" required>
+            <option value="">Select rating</option>
+            <option value="1">1 - Poor</option>
+            <option value="2">2 - Fair</option>
+            <option value="3">3 - Good</option>
+            <option value="4">4 - Very Good</option>
+            <option value="5">5 - Excellent</option>
+          </select>
+
+          <label for="feedbackComments">Comments</label>
+          <textarea id="feedbackComments" rows="4" placeholder="Share your experience..."></textarea>
+
+          <button type="submit" class="btn btn-primary">Submit Feedback</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= GUIDE DASHBOARD ================= -->
+<section id="guideDashboardSection" class="page-section hidden">
+  <div class="container dashboard-layout">
+
+    <aside class="dashboard-sidebar">
+      <h3>Welcome,<br /><span id="guideWelcomeName">Guide</span></h3>
+      <nav class="dashboard-nav">
+        <button class="dashboard-nav-btn active" data-tab="guideProfileTab">My Profile</button>
+        <button class="dashboard-nav-btn" data-tab="guideBookingsTab">Assigned Bookings</button>
+        <button class="dashboard-nav-btn logout-btn" id="guideLogoutBtn">Logout</button>
+      </nav>
+    </aside>
+
+    <div class="dashboard-content">
+
+      <div class="dashboard-tab" id="guideProfileTab">
+        <h2>My Profile</h2>
+        <div class="info-card" id="guideProfileCard">
+          <p><strong>Name:</strong> <span id="guideProfileName"></span></p>
+          <p><strong>Email:</strong> <span id="guideProfileEmail"></span></p>
+          <p><strong>Phone:</strong> <span id="guideProfilePhone"></span></p>
+          <p><strong>Experience:</strong> <span id="guideProfileExperience"></span> years</p>
+          <p><strong>Languages:</strong> <span id="guideProfileLanguage"></span></p>
+          <p><strong>Availability:</strong> <span id="guideProfileAvailability"></span></p>
+        </div>
+        <div class="form-card">
+          <label for="guideAvailabilitySelect">Update Availability</label>
+          <select id="guideAvailabilitySelect">
+            <option value="AVAILABLE">Available</option>
+            <option value="UNAVAILABLE">Unavailable</option>
+          </select>
+          <button class="btn btn-primary" id="updateAvailabilityBtn">Update Availability</button>
+        </div>
+      </div>
+
+      <div class="dashboard-tab hidden" id="guideBookingsTab">
+        <h2>Assigned Bookings</h2>
+        <div id="guideBookingsList" class="bookings-list"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= ADMIN DASHBOARD ================= -->
+<section id="adminDashboardSection" class="page-section hidden">
+  <div class="container dashboard-layout">
+
+    <aside class="dashboard-sidebar">
+      <h3>Admin Panel<br /><span id="adminWelcomeName"></span></h3>
+      <nav class="dashboard-nav">
+        <button class="dashboard-nav-btn active" data-tab="adminOverviewTab">Overview</button>
+        <button class="dashboard-nav-btn" data-tab="adminUsersTab">Users</button>
+        <button class="dashboard-nav-btn" data-tab="adminSitesTab">Heritage Sites</button>
+        <button class="dashboard-nav-btn" data-tab="adminGuidesTab">Tour Guides</button>
+        <button class="dashboard-nav-btn" data-tab="adminEventsTab">Events</button>
+        <button class="dashboard-nav-btn" data-tab="adminBookingsTab">Bookings</button>
+        <button class="dashboard-nav-btn" data-tab="adminReportsTab">Reports</button>
+        <button class="dashboard-nav-btn logout-btn" id="adminLogoutBtn">Logout</button>
+      </nav>
+    </aside>
+
+    <div class="dashboard-content">
+
+      <div class="dashboard-tab" id="adminOverviewTab">
+        <h2>Platform Overview</h2>
+        <div class="stats-grid" id="adminStatsGrid"></div>
+      </div>
+
+      <div class="dashboard-tab hidden" id="adminUsersTab">
+        <h2>Users</h2>
+        <div class="table-wrap">
+          <table class="data-table" id="adminUsersTable">
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Role</th></tr>
+            </thead>
+            <tbody id="adminUsersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="dashboard-tab hidden" id="adminSitesTab">
+        <div class="tab-header">
+          <h2>Heritage Sites</h2>
+          <button class="btn btn-primary" id="addSiteBtn">+ Add Site</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="adminSitesTable">
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Location</th><th>Price</th><th>Timings</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="adminSitesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="dashboard-tab hidden" id="adminGuidesTab">
+        <h2>Tour Guides</h2>
+        <div class="table-wrap">
+          <table class="data-table" id="adminGuidesTable">
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Email</th><th>Experience</th><th>Languages</th><th>Availability</th></tr>
+            </thead>
+            <tbody id="adminGuidesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="dashboard-tab hidden" id="adminEventsTab">
+        <div class="tab-header">
+          <h2>Events</h2>
+          <button class="btn btn-primary" id="addEventBtn">+ Add Event</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="adminEventsTable">
+            <thead>
+              <tr><th>ID</th><th>Event</th><th>Site</th><th>Date</th><th>Time</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="adminEventsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="dashboard-tab hidden" id="adminBookingsTab">
+        <h2>All Bookings</h2>
+        <div class="table-wrap">
+          <table class="data-table" id="adminBookingsTable">
+            <thead>
+              <tr><th>ID</th><th>Tourist</th><th>Site</th><th>Guide</th><th>Visit Date</th><th>Tickets</th><th>Amount</th><th>Status</th><th>Payment</th></tr>
+            </thead>
+            <tbody id="adminBookingsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="dashboard-tab hidden" id="adminReportsTab">
+        <h2>Reports</h2>
+        <div id="adminReportsContent"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= AUTH MODAL ================= -->
+<div class="modal-overlay hidden" id="authModal">
+  <div class="modal">
+    <button class="modal-close" id="closeAuthModal">&times;</button>
+
+    <div class="modal-tabs">
+      <button class="modal-tab-btn active" id="showLoginTab">Login</button>
+      <button class="modal-tab-btn" id="showRegisterTab">Register</button>
+    </div>
+
+    <form id="loginForm" class="modal-form">
+      <h2>Login</h2>
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" required />
+
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" required />
+
+      <button type="submit" class="btn btn-primary btn-block">Login</button>
+      <p class="form-hint">Admin: admin@heritagetour.com / Admin@123 &nbsp;|&nbsp; Guide: arjun.guide@heritagetour.com / Guide@123</p>
+    </form>
+
+    <form id="registerForm" class="modal-form hidden">
+      <h2>Register</h2>
+      <label for="registerName">Full Name</label>
+      <input type="text" id="registerName" required />
+
+      <label for="registerEmail">Email</label>
+      <input type="email" id="registerEmail" required />
+
+      <label for="registerPhone">Phone</label>
+      <input type="tel" id="registerPhone" required />
+
+      <label for="registerPassword">Password</label>
+      <input type="password" id="registerPassword" required minlength="6" />
+
+      <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= SITE DETAILS MODAL ================= -->
+<div class="modal-overlay hidden" id="siteDetailsModal">
+  <div class="modal">
+    <button class="modal-close" id="closeSiteDetailsModal">&times;</button>
+    <div id="siteDetailsContent"></div>
+  </div>
+</div>
+
+<!-- ================= BOOKING MODAL ================= -->
+<div class="modal-overlay hidden" id="bookingModal">
+  <div class="modal">
+    <button class="modal-close" id="closeBookingModal">&times;</button>
+    <h2>Book a Heritage Visit</h2>
+    <form id="bookingForm" class="modal-form">
+      <label for="bookingSiteSelect">Heritage Site</label>
+      <select id="bookingSiteSelect" required></select>
+
+      <label for="bookingGuideSelect">Tour Guide (required)</label>
+      <select id="bookingGuideSelect">
+        <option value="">Select a tour guide</option>
+      </select>
+
+      <label for="bookingVisitDate">Visit Date</label>
+      <input type="date" id="bookingVisitDate" required />
+
+      <label for="bookingTickets">Number of Tickets</label>
+      <input type="number" id="bookingTickets" min="1" value="1" required />
+
+      <div class="amount-display">
+        Total Amount: <span id="bookingAmountDisplay">₹0</span>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= PAYMENT MODAL ================= -->
+<div class="modal-overlay hidden" id="paymentModal">
+  <div class="modal">
+    <button class="modal-close" id="closePaymentModal">&times;</button>
+    <h2>Make Payment</h2>
+    <form id="paymentForm" class="modal-form">
+      <p><strong>Booking ID:</strong> <span id="paymentBookingIdDisplay"></span></p>
+      <p><strong>Amount:</strong> <span id="paymentAmountDisplay"></span></p>
+
+      <label for="paymentMethodSelect">Payment Method</label>
+      <select id="paymentMethodSelect" required>
+        <option value="UPI">UPI</option>
+        <option value="CARD">Card</option>
+        <option value="NET_BANKING">Net Banking</option>
+      </select>
+
+      <button type="submit" class="btn btn-primary btn-block">Pay Now</button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= ADMIN SITE FORM MODAL ================= -->
+<div class="modal-overlay hidden" id="adminSiteModal">
+  <div class="modal">
+    <button class="modal-close" id="closeAdminSiteModal">&times;</button>
+    <h2 id="adminSiteModalTitle">Add Heritage Site</h2>
+    <form id="adminSiteForm" class="modal-form">
+      <input type="hidden" id="adminSiteId" />
+      <label for="adminSiteName">Site Name</label>
+      <input type="text" id="adminSiteName" required />
+
+      <label for="adminSiteLocation">Location</label>
+      <input type="text" id="adminSiteLocation" required />
+
+      <label for="adminSiteDescription">Description</label>
+      <textarea id="adminSiteDescription" rows="3"></textarea>
+
+      <label for="adminSiteOpeningTime">Opening Time</label>
+      <input type="text" id="adminSiteOpeningTime" placeholder="e.g. 09:00" />
+
+      <label for="adminSiteClosingTime">Closing Time</label>
+      <input type="text" id="adminSiteClosingTime" placeholder="e.g. 17:00" />
+
+      <label for="adminSiteTicketPrice">Ticket Price</label>
+      <input type="number" id="adminSiteTicketPrice" min="0" step="0.01" required />
+
+      <button type="submit" class="btn btn-primary btn-block">Save Heritage Site</button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= ADMIN EVENT FORM MODAL ================= -->
+<div class="modal-overlay hidden" id="adminEventModal">
+  <div class="modal">
+    <button class="modal-close" id="closeAdminEventModal">&times;</button>
+    <h2 id="adminEventModalTitle">Add Event</h2>
+    <form id="adminEventForm" class="modal-form">
+      <input type="hidden" id="adminEventId" />
+      <label for="adminEventSiteSelect">Heritage Site</label>
+      <select id="adminEventSiteSelect" required></select>
+
+      <label for="adminEventName">Event Name</label>
+      <input type="text" id="adminEventName" required />
+
+      <label for="adminEventDate">Event Date</label>
+      <input type="date" id="adminEventDate" required />
+
+      <label for="adminEventTime">Event Time</label>
+      <input type="text" id="adminEventTime" placeholder="e.g. 18:00" />
+
+      <label for="adminEventDescription">Description</label>
+      <textarea id="adminEventDescription" rows="3"></textarea>
+
+      <button type="submit" class="btn btn-primary btn-block">Save Event</button>
+    </form>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2026 HeritageTour - Smart Tourism & Heritage Management Platform</p>
+  </div>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>
