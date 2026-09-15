@@ -1,10 +1,8 @@
 -- ==================================================
 -- Smart Tourism & Heritage Management Platform
 -- Oracle Database Schema
--- Run this as / connected to the TOURISM_APP user
 -- ==================================================
 
--- Drop tables if they already exist (children first)
 BEGIN
   EXECUTE IMMEDIATE 'DROP TABLE FEEDBACK CASCADE CONSTRAINTS';
 EXCEPTION WHEN OTHERS THEN NULL;
